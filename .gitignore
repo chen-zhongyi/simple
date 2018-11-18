@@ -1,0 +1,20 @@
+# IDE and editors
+*~
+.idea
+nbproject
+eclipse
+.amateras
+.settings
+.classpath
+.project
+*.iml
+*.ipr
+*.iws
+.pydevproject
+.metadata
+.DS_Store
+*.orig
+
+# target or log
+*/target
+*/log
