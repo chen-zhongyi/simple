@@ -44,7 +44,7 @@ public class AreaServiceImp extends BaseServiceImp<Area, AreaVO> implements Area
             AmapResult result = amapService.districtList();
             for (AmapResult.District district : result.getDistricts()) {
                 AreaVO areaVO = new AreaVO();
-                areaVO.setCode(district.getAdCode());
+                areaVO.setCode(district.getAdcode());
                 areaVO.setName(district.getName());
                 areaVO.setLevel(district.getLevel());
                 areaVO.setCenter(district.getCenter());
@@ -57,7 +57,7 @@ public class AreaServiceImp extends BaseServiceImp<Area, AreaVO> implements Area
     private void init(List<AmapResult.District> districts, Long parentId) {
         for (AmapResult.District district : districts) {
             AreaVO areaVO = new AreaVO();
-            areaVO.setCode(district.getAdCode());
+            areaVO.setCode(district.getAdcode());
             areaVO.setName(district.getName());
             areaVO.setLevel(district.getLevel());
             areaVO.setCenter(district.getCenter());

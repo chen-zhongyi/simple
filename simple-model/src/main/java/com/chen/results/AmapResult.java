@@ -10,18 +10,18 @@ public class AmapResult {
     private List<District> districts;
 
     public static class District {
-        private String adCode;
+        private String adcode;
         private String name;
         private String level;
         private String center;
         private List<District> districts;
 
-        public String getAdCode() {
-            return adCode;
+        public String getAdcode() {
+            return adcode;
         }
 
-        public void setAdCode(String adCode) {
-            this.adCode = adCode;
+        public void setAdcode(String adcode) {
+            this.adcode = adcode;
         }
 
         public String getName() {
