@@ -4,7 +4,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.chen.annotations.NotNeedLogin;
 import com.chen.exceptions.BizException;
 import com.chen.utils.JwtUtil;
-import com.chen.utils.PropertyUtil;
 import com.chen.vos.Result;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,7 +25,7 @@ import java.lang.reflect.Method;
 public class AccesstokenManager {
 
     @Autowired
-    private PropertyUtil propertyUtil;
+    private JwtUtil jwtUtil;
 
     @Before(value = "(execution(* com.chen.controllers.*.*(..)) || execution(* com.chen.controllers.*.*.*(..))) " +
             "&& (! within(com.chen.controllers.BaseController))")
@@ -37,7 +36,7 @@ public class AccesstokenManager {
         if (annotation == null) {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String token = request.getHeader("accesstoken");
-            DecodedJWT jwt = JwtUtil.verify(token, propertyUtil.getSecret(), propertyUtil.getHost());
+            DecodedJWT jwt = jwtUtil.verify(token);
             if (jwt == null) {
                 throw new BizException(Result.StatusCode.SYSTEM_TOKEN_UNVALID);
             }

@@ -4,7 +4,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.chen.model.back.Api;
 import com.chen.service.back.ApiService;
 import com.chen.utils.JwtUtil;
-import com.chen.utils.PropertyUtil;
 import com.chen.vos.ApiVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -43,7 +42,7 @@ public class LogManager {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private PropertyUtil propertyUtil;
+    private JwtUtil jwtUtil;
 
     @Pointcut(value = "(execution(* com.chen.controllers.*.*(..)) || execution(* com.chen.controllers.*.*.*(..))) " +
             "&& (! within(com.chen.controllers.BaseController))")
@@ -54,7 +53,7 @@ public class LogManager {
         Long startTime = System.currentTimeMillis();
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String token = request.getHeader("accesstoken");
-        DecodedJWT jwt = JwtUtil.verify(token, propertyUtil.getSecret(), propertyUtil.getHost());
+        DecodedJWT jwt = jwtUtil.verify(token);
         logger.info("[start         ]:" + "------------");
         logger.info("[request method]:" + request.getMethod());
         logger.info("[content type  ]:" + request.getContentType());

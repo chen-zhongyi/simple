@@ -9,7 +9,6 @@ import com.chen.service.imp.BaseServiceImp;
 import com.chen.service.person.PersonService;
 import com.chen.utils.JwtUtil;
 import com.chen.utils.PinyinUtil;
-import com.chen.utils.PropertyUtil;
 import com.chen.vos.PersonVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +37,7 @@ public class PersonServiceImp extends BaseServiceImp<Person, PersonVO> implement
     }
 
     @Autowired
-    private PropertyUtil propertyUtil;
+    private JwtUtil jwtUtil;
 
     public Person login(LoginType type, PersonType personType, String username, String phone, String password) {
         boolean success = false;
@@ -60,7 +59,7 @@ public class PersonServiceImp extends BaseServiceImp<Person, PersonVO> implement
             loginAmount ++;
             personVO.setLoginAmount(loginAmount);
             Person p = edit(person.getId(), personVO);
-            p.setToken(JwtUtil.create(person, propertyUtil.getSecret(), propertyUtil.getHost()));
+            p.setToken(jwtUtil.create(person));
             return p;
         }
         return null;

@@ -8,14 +8,23 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.chen.model.person.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class JwtUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    public static String create(Person person, String secret, String issuer) {
+    @Value("#{propertyUtil.getSecret()}")
+    private String secret;
+
+    @Value("#{propertyUtil.getHost()}")
+    private String issuer;
+
+    public String create(Person person) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         String token = JWT.create()
                 .withClaim("name", person.getName())
@@ -27,7 +36,7 @@ public class JwtUtil {
         return token;
     }
 
-    public static DecodedJWT verify(String token, String secret, String issuer) {
+    public DecodedJWT verify(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
